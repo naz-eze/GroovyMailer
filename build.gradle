@@ -8,7 +8,12 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
+dependencies {	
+	// https://mvnrepository.com/artifact/javax.mail/mail
+	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+	
+	// https://mvnrepository.com/artifact/org.spockframework/spock-core
+	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
 	
 }
 
