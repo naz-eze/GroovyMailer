@@ -8,6 +8,11 @@ class Mailer {
 	
 	private static Properties PROPERTIES
 	
+	List<String> to = []
+	List<String> cc = []
+	List<String> bcc = []
+	
+	
 	public static def configure(Closure closure) {
 		closure(this)
 		
