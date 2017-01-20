@@ -16,25 +16,25 @@ class MailBuilder {
 		mail
 	}
 
-	void to(Closure email) {
+	def to(Closure email) {
 		toMode = true
 		runClosure email
 		toMode = false
 	}
 
-	void cc(Closure email) {
+	def cc(Closure email) {
 		ccMode = true
 		runClosure email
 		ccMode = false
 	}
 
-	void bcc(Closure email) {
+	def bcc(Closure email) {
 		bccMode = true
 		runClosure email
 		bccMode = false
 	}
 
-	void email(String toEmail) {
+	def email(String toEmail) {
 		if (toMode) {
 			mail.to << toEmail
 		} else if (ccMode) {
@@ -46,19 +46,19 @@ class MailBuilder {
 		}
 	}
 	
-	def methodMissing(String name, arguments) {
+	private def methodMissing(String name, arguments) {
 		if (name == 'from') {
 			mail.from = arguments[0]
 		}
 	}
 
-	void attachment (Closure closure) {
+	def attachment (Closure closure) {
 		attachmentMode = true
 		runClosure closure
 		attachmentMode = false
 	}
 	
-	void name(String fileName) {
+	def name(String fileName) {
 		if (attachmentMode) {
 			mail.attachments << fileName
 		} else {
@@ -66,7 +66,7 @@ class MailBuilder {
 		}
 	}
 	
-	private runClosure(Closure closure) {
+	private def runClosure(Closure closure) {
 		Closure runClone = closure.clone()
 		runClone.delegate = this
 		runClone.resolveStrategy = Closure.DELEGATE_ONLY
