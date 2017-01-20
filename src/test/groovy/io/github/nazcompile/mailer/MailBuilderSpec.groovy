@@ -6,31 +6,29 @@ class MailBuilderSpec extends Specification {
 
 	def "Should be able to build recipients email"() {
 		when:
-		Mail mailer = new MailBuilder().build {
+			Mail mail = new MailBuilder().build {
 				to {
 					email 'naz@domail.com'
 					email 'zan@domain.com'
 				}
-				cc {
-					email 'someone@domain.com'
-				}
-				bcc {
-					email 'anybody@domain.com'
-				}
+				cc { email 'someone@domain.com' }
+				bcc { email 'anybody@domain.com' }
 			}
-			
+
 		then:
-			mailer.getTo() == ['naz@domail.com', 'zan@domain.com']
-			mailer.getCc() == ['someone@domain.com']
-			mailer.getBcc() == ['anybody@domain.com']
+			mail.getTo() == [
+				'naz@domail.com',
+				'zan@domain.com'
+			]
+			mail.getCc() == ['someone@domain.com']
+			mail.getBcc() == ['anybody@domain.com']
 	}
-	
+
 	def "Should through IllegalStateException if email() is used incorrectly"() {
 		when:
-			new MailBuilder().build {
-				email 'wrongplace@domain.com'
-			}
+			new MailBuilder().build { email 'wrongplace@domain.com' }
 		then:
 			thrown(IllegalStateException)
 	}
+
 }
