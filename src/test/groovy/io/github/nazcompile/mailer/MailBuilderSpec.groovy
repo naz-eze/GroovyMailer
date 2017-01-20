@@ -43,13 +43,20 @@ class MailBuilderSpec extends Specification {
 	def "Should be able to build mail object with any attachments"() {
 		when:
 			Mail mail = new MailBuilder().build {
-				attachments {
-					fileName 'somefile.pdf'
-					fileName 'random.txt'
+				attachment {
+					name 'somefile.pdf'
+					name 'random.txt'
 				}
 			}
 		then:
 			mail.getAttachments() == ['somefile.pdf', 'random.txt']
+	}
+	
+	def "Should through IllegalStateException if name() is used incorrectly"() {
+		when:
+			new MailBuilder().build { name 'wrongplace.doc' }
+		then:
+			thrown(IllegalStateException)
 	}
 
 }

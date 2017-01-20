@@ -52,15 +52,17 @@ class MailBuilder {
 		}
 	}
 
-	void attachments (Closure closure) {
+	void attachment (Closure closure) {
 		attachmentMode = true
 		runClosure closure
 		attachmentMode = false
 	}
 	
-	void fileName(String fileName) {
+	void name(String fileName) {
 		if (attachmentMode) {
 			mail.attachments << fileName
+		} else {
+			throw new IllegalStateException("name() only allowed in attachment context.")
 		}
 	}
 	
