@@ -17,31 +17,31 @@ class MailBuilder {
 		mail
 	}
 
-	def to(Closure email) {
+	def to(Closure toClosure) {
 		toMode = true
-		runClosure email
+		runClosure toClosure
 		toMode = false
 	}
 
-	def cc(Closure email) {
+	def cc(Closure ccClosure) {
 		ccMode = true
-		runClosure email
+		runClosure ccClosure
 		ccMode = false
 	}
 
-	def bcc(Closure email) {
+	def bcc(Closure bccClosure) {
 		bccMode = true
-		runClosure email
+		runClosure bccClosure
 		bccMode = false
 	}
 
-	def email(String toEmail) {
+	def email(String email) {
 		if (toMode) {
-			mail.to << toEmail
+			mail.to << email
 		} else if (ccMode) {
-			mail.cc << toEmail
+			mail.cc << email
 		} else if (bccMode) {
-			mail.bcc << toEmail
+			mail.bcc << email
 		} else {
 			throw new IllegalStateException("email() only allowed in to, cc or bcc context.")
 		}
