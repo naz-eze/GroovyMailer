@@ -8,6 +8,7 @@ class Mail {
 	
 	private static Properties PROPERTIES
 	
+	String from = ''
 	List<String> to = []
 	List<String> cc = []
 	List<String> bcc = []

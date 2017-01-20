@@ -44,6 +44,12 @@ class MailBuilder {
 			throw new IllegalStateException("email() only allowed in to, cc or bcc context.")
 		}
 	}
+	
+	def methodMissing(String name, arguments) {
+		if (name == 'from') {
+			mail.from = arguments[0]
+		}
+	}
 
 	private runClosure(Closure closure) {
 		Closure runClone = closure.clone()

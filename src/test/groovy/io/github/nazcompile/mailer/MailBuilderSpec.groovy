@@ -30,5 +30,14 @@ class MailBuilderSpec extends Specification {
 		then:
 			thrown(IllegalStateException)
 	}
+	
+	def "Should be able to get sender's email"() {
+		when:
+			Mail mail = new MailBuilder().build {
+				from 'noreply@domain.com'
+			}
+		then:
+			mail.getFrom() == 'noreply@domain.com'
+	}
 
 }
