@@ -2,11 +2,11 @@ package io.github.nazcompile.mailer
 
 import spock.lang.Specification
 
-class MailerBuilderSpec extends Specification {
+class MailBuilderSpec extends Specification {
 
 	def "Should be able to build recipients email"() {
 		when:
-		Mail mailer = new MailerBuilder().build {
+		Mail mailer = new MailBuilder().build {
 				to {
 					email 'naz@domail.com'
 					email 'zan@domain.com'
@@ -27,7 +27,7 @@ class MailerBuilderSpec extends Specification {
 	
 	def "Should through IllegalStateException if email() is used incorrectly"() {
 		when:
-			new MailerBuilder().build {
+			new MailBuilder().build {
 				email 'wrongplace@domain.com'
 			}
 		then:

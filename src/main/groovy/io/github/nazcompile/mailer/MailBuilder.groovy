@@ -1,8 +1,8 @@
 package io.github.nazcompile.mailer
 
-class MailerBuilder {
+class MailBuilder {
 
-	Mail mailer
+	Mail mail
 
 	private def toMode = false
 	private def ccMode = false
@@ -10,9 +10,9 @@ class MailerBuilder {
 
 
 	Mail build(Closure definition) {
-		mailer = new Mail()
+		mail = new Mail()
 		runClosure definition
-		mailer
+		mail
 	}
 
 	void to(Closure email) {
@@ -35,11 +35,11 @@ class MailerBuilder {
 
 	void email(String toEmail) {
 		if (toMode) {
-			mailer.to << toEmail
+			mail.to << toEmail
 		} else if (ccMode) {
-			mailer.cc << toEmail
+			mail.cc << toEmail
 		} else if (bccMode) {
-			mailer.bcc << toEmail
+			mail.bcc << toEmail
 		} else {
 			throw new IllegalStateException("email() only allowed in to, cc or bcc context.")
 		}
