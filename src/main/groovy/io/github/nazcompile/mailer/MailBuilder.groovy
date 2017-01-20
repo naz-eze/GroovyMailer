@@ -2,11 +2,12 @@ package io.github.nazcompile.mailer
 
 class MailBuilder {
 
-	Mail mail
+	private Mail mail
 
 	private def toMode = false
 	private def ccMode = false
 	private def bccMode = false
+	private def attachmentMode = false
 
 
 	Mail build(Closure definition) {
@@ -51,6 +52,18 @@ class MailBuilder {
 		}
 	}
 
+	void attachments (Closure closure) {
+		attachmentMode = true
+		runClosure closure
+		attachmentMode = false
+	}
+	
+	void fileName(String fileName) {
+		if (attachmentMode) {
+			mail.attachments << fileName
+		}
+	}
+	
 	private runClosure(Closure closure) {
 		Closure runClone = closure.clone()
 		runClone.delegate = this

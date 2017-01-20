@@ -39,5 +39,17 @@ class MailBuilderSpec extends Specification {
 		then:
 			mail.getFrom() == 'noreply@domain.com'
 	}
+	
+	def "Should be able to build mail object with any attachments"() {
+		when:
+			Mail mail = new MailBuilder().build {
+				attachments {
+					fileName 'somefile.pdf'
+					fileName 'random.txt'
+				}
+			}
+		then:
+			mail.getAttachments() == ['somefile.pdf', 'random.txt']
+	}
 
 }
