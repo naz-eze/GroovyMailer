@@ -6,7 +6,7 @@ class MailerBuilderSpec extends Specification {
 
 	def "Should be able to build recipients email"() {
 		when:
-		Mailer mailer = new MailerBuilder().build {
+		Mail mailer = new MailerBuilder().build {
 				to {
 					email 'naz@domail.com'
 					email 'zan@domain.com'

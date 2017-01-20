@@ -1,6 +1,6 @@
 package io.github.nazcompile.mailer
 
-class Mailer {
+class Mail {
 	
 	public static def SMTP_HOST
 	public static def SMTP_PORT

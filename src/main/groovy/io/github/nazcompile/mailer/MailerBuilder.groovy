@@ -2,15 +2,15 @@ package io.github.nazcompile.mailer
 
 class MailerBuilder {
 
-	Mailer mailer
+	Mail mailer
 
 	private def toMode = false
 	private def ccMode = false
 	private def bccMode = false
 
 
-	Mailer build(Closure definition) {
-		mailer = new Mailer()
+	Mail build(Closure definition) {
+		mailer = new Mail()
 		runClosure definition
 		mailer
 	}
