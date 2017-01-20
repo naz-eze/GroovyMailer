@@ -8,6 +8,7 @@ class MailBuilder {
 	private def ccMode = false
 	private def bccMode = false
 	private def attachmentMode = false
+	private def messageMode = false
 
 
 	Mail build(Closure definition) {
@@ -54,7 +55,7 @@ class MailBuilder {
 		}
 	}
 
-	def attachment (Closure closure) {
+	def attachment(Closure closure) {
 		attachmentMode = true
 		runClosure closure
 		attachmentMode = false
@@ -65,6 +66,28 @@ class MailBuilder {
 			mail.attachments << fileName
 		} else {
 			throw new IllegalStateException("name() only allowed in attachment context.")
+		}
+	}
+	
+	def message(Closure messageClosure) {
+		messageMode = true
+		runClosure messageClosure
+		messageMode = false
+	}
+	
+	def content(String messageContent) {
+		if (messageMode) {
+			mail.messageContent = messageContent
+		} else {
+			throw new IllegalStateException("content() only allowed in message context.")	
+		}
+	}
+	
+	def type(String messageType) {
+		if (messageMode) {
+			mail.messageType = messageType
+		} else {
+			throw new IllegalStateException("type() only allowed in message context.")
 		}
 	}
 	

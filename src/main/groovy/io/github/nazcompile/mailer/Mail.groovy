@@ -14,6 +14,8 @@ class Mail {
 	List<String> bcc = []
 	List<String> attachments =[]
 	String subject = ''
+	String messageContent = ''
+	String messageType = ''
 	
 	
 	public static def configure(Closure closure) {

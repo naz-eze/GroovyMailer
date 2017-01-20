@@ -67,5 +67,42 @@ class MailBuilderSpec extends Specification {
 		then:
 			mail.getSubject() == 'This is a test'
 	}
+	
+	def "Should be able to build mail object with email message"() {
+		when:
+			Mail mail = new MailBuilder().build {
+				message {
+					content	'<html><body><h1>Sample Heading</h1><p>Test paragraph.</p></body></html>'
+					type	'text/html'
+				}
+			}
+		then:
+			mail.getMessageContent() == '<html><body><h1>Sample Heading</h1><p>Test paragraph.</p></body></html>'
+			mail.getMessageType() == 'text/html'
+	}
+	
+	def "Should through IllegalStateException if content() is used outside message contect"() {
+		when:
+			new MailBuilder().build { content 'Plain text email' }
+		then:
+			thrown(IllegalStateException)
+			
+		when:
+			new MailBuilder().build { to { content 'Plain text email' } }
+		then:
+			thrown(IllegalStateException)
+	}
+	
+	def "Should through IllegalStateException if type() is used outside message contect"() {
+		when:
+			new MailBuilder().build { type 'text/plain' }
+		then:
+			thrown(IllegalStateException)
+			
+		when:
+			new MailBuilder().build { attachment { type 'text/html' } }
+		then:
+			thrown(IllegalStateException)
+	}
 
 }
