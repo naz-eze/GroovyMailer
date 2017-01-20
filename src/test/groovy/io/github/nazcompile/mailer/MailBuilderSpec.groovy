@@ -104,5 +104,34 @@ class MailBuilderSpec extends Specification {
 		then:
 			thrown(IllegalStateException)
 	}
+	
+	def "Should be able to build an email object with all params"() {
+		when:
+			Mail mail = new MailBuilder().build {
+				from 'noreply@yourdomain.com'
+				to {
+					email 'ceo@yourdomain.com'
+					email 'hr@yourdoimain.com'
+				}
+				cc {
+					email 'assistant@yourdomain.com'
+					email 'employee@yourdomain.com'
+				}
+				bcc { email 'newemployee@yourdomain.com' }
+				subject "I'm happy"
+				message {
+					content "I'm very happy today!"
+					type 'text/plain'
+				}
+			}
+		then:
+			mail.getFrom() == 'noreply@yourdomain.com'
+			mail.getTo() == ['ceo@yourdomain.com', 'hr@yourdoimain.com']
+			mail.getCc() == ['assistant@yourdomain.com', 'employee@yourdomain.com']
+			mail.getBcc() == ['newemployee@yourdomain.com']
+			mail.getSubject() == "I'm happy"
+			mail.getMessageContent() == "I'm very happy today!"
+			mail.getMessageType() == 'text/plain'
+	}
 
 }
