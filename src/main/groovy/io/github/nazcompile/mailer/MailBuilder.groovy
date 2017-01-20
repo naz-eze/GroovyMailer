@@ -49,6 +49,8 @@ class MailBuilder {
 	private def methodMissing(String name, arguments) {
 		if (name == 'from') {
 			mail.from = arguments[0]
+		} else if (name == 'subject') {
+			mail.subject = arguments[0]
 		}
 	}
 

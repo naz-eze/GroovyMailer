@@ -13,6 +13,7 @@ class Mail {
 	List<String> cc = []
 	List<String> bcc = []
 	List<String> attachments =[]
+	String subject = ''
 	
 	
 	public static def configure(Closure closure) {

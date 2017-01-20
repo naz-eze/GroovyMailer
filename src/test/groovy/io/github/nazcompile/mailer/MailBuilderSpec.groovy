@@ -58,5 +58,14 @@ class MailBuilderSpec extends Specification {
 		then:
 			thrown(IllegalStateException)
 	}
+	
+	def "Should be able to build mail object with email subject"() {
+		when:
+			Mail mail = new MailBuilder().build {
+				subject 'This is a test'
+			}
+		then:
+			mail.getSubject() == 'This is a test'
+	}
 
 }
