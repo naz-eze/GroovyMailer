@@ -1,6 +1,7 @@
 package io.github.nazcompile.mailer;
 
-import javax.mail.Session;
+import javax.mail.Multipart
+import javax.mail.Session
 
 import spock.lang.Specification
 
@@ -32,6 +33,17 @@ public class MailSpec extends Specification {
 			def result = mail.getSession(propsMock)
 		then:
 			1 * Session.getDefaultInstance(propsMock) >> seesionMock
+	}
+	
+	def "Should be able to create message body"() {
+		given:
+			mail.messageContent = "Hello World"
+			mail.messageType = "text/plain"
+		when:
+			Multipart multiPart = mail.createMessageBody()
+		then:
+			multiPart.getBodyPart(0).getContent() == mail.getMessageContent()
+			multiPart.getBodyPart(0).getContentType() == mail.getMessageType()			
 	}
 
 }

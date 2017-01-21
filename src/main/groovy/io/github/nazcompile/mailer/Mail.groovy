@@ -1,6 +1,9 @@
 package io.github.nazcompile.mailer
 
+import javax.mail.Multipart
 import javax.mail.Session
+import javax.mail.internet.MimeBodyPart
+import javax.mail.internet.MimeMultipart
 
 class Mail {
 
@@ -32,6 +35,16 @@ class Mail {
 	private def getSession(Properties props) {
 		def session = Session.getDefaultInstance(props)
 		session
+	}
+
+	private def createMessageBody() {
+		MimeBodyPart bodyPart = new MimeBodyPart()
+		bodyPart.setContent(messageContent, messageType)
+
+		Multipart multiPart = new MimeMultipart()
+		multiPart.addBodyPart(bodyPart)
+
+		multiPart
 	}
 
 }
