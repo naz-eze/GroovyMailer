@@ -41,11 +41,22 @@ public class MailSpec extends Specification {
 		given:
 			mail.messageContent = "Hello World"
 			mail.messageType = "text/plain"
+			mail.attachments = ["one_attachment.pdf"]
 		when:
 			Multipart multiPart = mail.createMessageBody()
 		then:
 			multiPart.getBodyPart(0).getContent() == mail.getMessageContent()
-			multiPart.getBodyPart(0).getContentType() == mail.getMessageType()			
+			multiPart.getBodyPart(0).getContentType() == mail.getMessageType()		
+			multiPart.getBodyPart(1).getFileName() == "one_attachment.pdf"
+		and:
+			multiPart.getCount() == 2
+	}
+	
+	def "Should not add attachement if empty when creating message body"() {
+		when:
+			Multipart multiPart = mail.createMessageBody()
+		then:
+			multiPart.getCount() == 1
 	}
 	
 	def "Should call all methods required to add an attachment"() {

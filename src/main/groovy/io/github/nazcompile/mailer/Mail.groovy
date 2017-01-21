@@ -46,6 +46,13 @@ class Mail {
 
 		Multipart multiPart = new MimeMultipart()
 		multiPart.addBodyPart(bodyPart)
+
+		if (attachments.size() > 0) {
+			attachments.each { String fileName ->
+				bodyPart = new MimeBodyPart()
+				addAttachement(bodyPart, multiPart, new File(fileName))
+			}
+		}
 		
 		multiPart
 	}
