@@ -24,11 +24,11 @@ class MailBuilderSpec extends Specification {
 			mail.getBcc() == ['anybody@domain.com']
 	}
 
-	def "Should through IllegalStateException if email() is used incorrectly"() {
+	def "Should through UnsupportedOperationException if email() is used incorrectly"() {
 		when:
 			new MailBuilder().build { email 'wrongplace@domain.com' }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 	}
 	
 	def "Should be able to build mail object with sender's email"() {
@@ -52,11 +52,11 @@ class MailBuilderSpec extends Specification {
 			mail.getAttachments() == ['somefile.pdf', 'random.txt']
 	}
 	
-	def "Should through IllegalStateException if name() is used incorrectly"() {
+	def "Should through UnsupportedOperationException if name() is used incorrectly"() {
 		when:
 			new MailBuilder().build { name 'wrongplace.doc' }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 	}
 	
 	def "Should be able to build mail object with email subject"() {
@@ -81,28 +81,28 @@ class MailBuilderSpec extends Specification {
 			mail.getMessageType() == 'text/html'
 	}
 	
-	def "Should through IllegalStateException if content() is used outside message contect"() {
+	def "Should through UnsupportedOperationException if content() is used outside message contect"() {
 		when:
 			new MailBuilder().build { content 'Plain text email' }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 			
 		when:
 			new MailBuilder().build { to { content 'Plain text email' } }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 	}
 	
-	def "Should through IllegalStateException if type() is used outside message contect"() {
+	def "Should through UnsupportedOperationException if type() is used outside message contect"() {
 		when:
 			new MailBuilder().build { type 'text/plain' }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 			
 		when:
 			new MailBuilder().build { attachment { type 'text/html' } }
 		then:
-			thrown(IllegalStateException)
+			thrown(UnsupportedOperationException)
 	}
 	
 	def "Should be able to build an email object with all params"() {

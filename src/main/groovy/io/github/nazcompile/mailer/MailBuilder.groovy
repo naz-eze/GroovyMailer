@@ -43,7 +43,7 @@ class MailBuilder {
 		} else if (bccMode) {
 			mail.bcc << email
 		} else {
-			throw new IllegalStateException("email() only allowed in to, cc or bcc context.")
+			throw new UnsupportedOperationException("email() only allowed in to, cc or bcc context.")
 		}
 	}
 	
@@ -65,7 +65,7 @@ class MailBuilder {
 		if (attachmentMode) {
 			mail.attachments << fileName
 		} else {
-			throw new IllegalStateException("name() only allowed in attachment context.")
+			throw new UnsupportedOperationException("name() only allowed in attachment context.")
 		}
 	}
 	
@@ -79,7 +79,7 @@ class MailBuilder {
 		if (messageMode) {
 			mail.messageContent = messageContent
 		} else {
-			throw new IllegalStateException("content() only allowed in message context.")	
+			throw new UnsupportedOperationException("content() only allowed in message context.")	
 		}
 	}
 	
@@ -87,7 +87,7 @@ class MailBuilder {
 		if (messageMode) {
 			mail.messageType = messageType
 		} else {
-			throw new IllegalStateException("type() only allowed in message context.")
+			throw new UnsupportedOperationException("type() only allowed in message context.")
 		}
 	}
 	
