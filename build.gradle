@@ -17,6 +17,10 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/cglib/cglib
 	testCompile group: 'cglib', name: 'cglib', version: '3.2.4'	
+	
+	// https://mvnrepository.com/artifact/org.objenesis/objenesis
+	testCompile group: 'org.objenesis', name: 'objenesis', version: '2.4'
+	
 }
 
 task wrapper (type: Wrapper) {
