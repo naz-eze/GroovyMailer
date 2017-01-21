@@ -1,5 +1,8 @@
 package io.github.nazcompile.mailer
 
+import javax.activation.DataHandler
+import javax.activation.DataSource
+import javax.activation.FileDataSource
 import javax.mail.Multipart
 import javax.mail.Session
 import javax.mail.internet.MimeBodyPart
@@ -43,8 +46,15 @@ class Mail {
 
 		Multipart multiPart = new MimeMultipart()
 		multiPart.addBodyPart(bodyPart)
-
+		
 		multiPart
+	}
+	
+	private def addAttachement(MimeBodyPart bodyPart, Multipart multiPart, File attachment) {
+		DataSource source = new FileDataSource(attachment)
+		bodyPart.setDataHandler(new DataHandler(source))
+		bodyPart.setFileName(attachment.getName())
+		multiPart.addBodyPart(bodyPart)
 	}
 
 }

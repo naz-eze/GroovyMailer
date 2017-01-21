@@ -1,7 +1,9 @@
 package io.github.nazcompile.mailer;
 
+import javax.activation.DataHandler
 import javax.mail.Multipart
 import javax.mail.Session
+import javax.mail.internet.MimeBodyPart
 
 import spock.lang.Specification
 
@@ -44,6 +46,22 @@ public class MailSpec extends Specification {
 		then:
 			multiPart.getBodyPart(0).getContent() == mail.getMessageContent()
 			multiPart.getBodyPart(0).getContentType() == mail.getMessageType()			
+	}
+	
+	def "Should call all methods required to add an attachment"() {
+		setup:
+			MimeBodyPart mimeBodyPartSpy = Spy()
+			Multipart multiPartSpy = Spy()
+			File mockFile = Mock()
+			mockFile.getName() >> "somefile.txt"
+			
+		when:
+			mail.addAttachement(mimeBodyPartSpy, multiPartSpy, mockFile)
+		
+		then:
+			1 * mimeBodyPartSpy.setDataHandler(_ as DataHandler)
+			1 * mimeBodyPartSpy.setFileName("somefile.txt")
+			1 * multiPartSpy.addBodyPart(_ as MimeBodyPart)
 	}
 
 }
