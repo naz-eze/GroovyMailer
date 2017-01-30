@@ -86,6 +86,19 @@ class Mail {
 		message.setRecipients(recipientType, 
 				recipients.collect { new InternetAddress(it) } as Address[])
 	}
+	
+	private def constructMail() {
+		MimeMessage mimeMessage = new MimeMessage(getSession(PROPERTIES))	
+		createRecipients(mimeMessage)
+		
+		mimeMessage.setFrom(new InternetAddress(from))
+		mimeMessage.setSubject(subject)
+		mimeMessage.setContent(createMessageBody())
+		mimeMessage.setSentDate(new Date())
+		mimeMessage.saveChanges();
+		
+		mimeMessage
+	}
 
 
 }

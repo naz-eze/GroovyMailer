@@ -4,6 +4,7 @@ import javax.activation.DataHandler
 import javax.mail.Message
 import javax.mail.Multipart
 import javax.mail.Session
+import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
 import javax.mail.internet.MimeMessage
 
@@ -125,4 +126,32 @@ public class MailSpec extends Specification {
 			0 * mailSpy.setRecipients(message, Message.RecipientType.BCC, _ as List)
 	}
 	
+	def "Should be able to construct mail message"() {
+		given:
+			def seesionMock = GroovyMock(Session, global: true)
+			mail.getSession(_ as Properties) >> seesionMock
+			
+			mail.from = "sender@domain.com"
+			mail.to = ["recipient@domain.com"]
+			mail.cc = ["cc1@domain.com", "cc2@domain.com"]
+			mail.bcc = ["bcc@domain.com"]
+			mail.subject = "Test"
+			mail.messageContent = "<p> The email content </p>"
+			mail.messageType = "text/html"
+			
+		when:
+			MimeMessage message = mail.constructMail()
+			
+		then:
+			message.getFrom()[0] == new InternetAddress("sender@domain.com")
+			message.getRecipients(Message.RecipientType.TO)[0] == new InternetAddress("recipient@domain.com")
+			message.getRecipients(Message.RecipientType.CC)[1] == new InternetAddress("cc2@domain.com")
+			message.getRecipients(Message.RecipientType.BCC)[0] == new InternetAddress("bcc@domain.com")
+			
+			message.getSubject() == "Test"
+			message.getContent().getBodyPart(0).getContent() == mail.getMessageContent()
+			message.getContent().getBodyPart(0).getContentType() == "text/html; charset=us-ascii" //default charset
+			
+			message.getSentDate() != null
+	}
 }
