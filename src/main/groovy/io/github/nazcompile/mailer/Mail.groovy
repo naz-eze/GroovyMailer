@@ -7,6 +7,7 @@ import javax.mail.Address
 import javax.mail.Message
 import javax.mail.Multipart
 import javax.mail.Session
+import javax.mail.Transport
 import javax.mail.Message.RecipientType
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
@@ -99,6 +100,9 @@ class Mail {
 		
 		mimeMessage
 	}
-
+	
+	public def send() {
+		Transport.send(constructMail())
+	}
 
 }
