@@ -3,9 +3,14 @@ package io.github.nazcompile.mailer
 import javax.activation.DataHandler
 import javax.activation.DataSource
 import javax.activation.FileDataSource
+import javax.mail.Address
+import javax.mail.Message
 import javax.mail.Multipart
 import javax.mail.Session
+import javax.mail.Message.RecipientType
+import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
+import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
 
 class Mail {
@@ -35,13 +40,14 @@ class Mail {
 		PROPERTIES.put('mail.transport.protocol', TRANSPORT_TYPE)
 	}
 
-	private def getSession(Properties props) {
+	def getSession(Properties props) {
 		def session = Session.getDefaultInstance(props)
 		session
 	}
 
 	private def createMessageBody() {
 		MimeBodyPart bodyPart = new MimeBodyPart()
+		bodyPart.setHeader("Content-Type", messageType)
 		bodyPart.setContent(messageContent, messageType)
 
 		Multipart multiPart = new MimeMultipart()
@@ -63,5 +69,23 @@ class Mail {
 		bodyPart.setFileName(attachment.getName())
 		multiPart.addBodyPart(bodyPart)
 	}
+	
+	private def createRecipients(MimeMessage message) {
+		if (to.size() > 0) {
+			setRecipients(message, Message.RecipientType.TO, to)
+		}
+		if (cc.size() > 0) {
+			setRecipients(message, Message.RecipientType.CC, cc)
+		}
+		if (bcc.size() > 0) {
+			setRecipients(message, Message.RecipientType.BCC, bcc)
+		}
+	}
+
+	def setRecipients(MimeMessage message, recipientType, recipients) {
+		message.setRecipients(recipientType, 
+				recipients.collect { new InternetAddress(it) } as Address[])
+	}
+
 
 }

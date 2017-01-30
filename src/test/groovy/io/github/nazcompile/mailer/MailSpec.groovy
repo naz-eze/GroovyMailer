@@ -1,9 +1,11 @@
 package io.github.nazcompile.mailer;
 
 import javax.activation.DataHandler
+import javax.mail.Message
 import javax.mail.Multipart
 import javax.mail.Session
 import javax.mail.internet.MimeBodyPart
+import javax.mail.internet.MimeMessage
 
 import spock.lang.Specification
 
@@ -74,5 +76,53 @@ public class MailSpec extends Specification {
 			1 * mimeBodyPartSpy.setFileName("somefile.txt")
 			1 * multiPartSpy.addBodyPart(_ as MimeBodyPart)
 	}
-
+	
+	def "Should be able to set TO recipients if they exists"() {
+		given:
+			Mail mailSpy = Spy()
+			MimeMessage message = Mock()
+		when:
+			mailSpy.to = ['test@domain.com']
+			mailSpy.createRecipients(message)
+		then:
+			1 * mailSpy.setRecipients(message, Message.RecipientType.TO, ['test@domain.com']) 
+		when:
+			mailSpy.to = []
+			mailSpy.createRecipients(message)
+		then:
+			0 * mailSpy.setRecipients(message, Message.RecipientType.TO, _ as List)
+	}
+	
+	def "Should be able to set CC recipients if they exists"() {
+		given:
+			Mail mailSpy = Spy()
+			MimeMessage message = Mock()
+		when:
+			mailSpy.cc = ['cc@domain.com']
+			mailSpy.createRecipients(message)
+		then:
+			1 * mailSpy.setRecipients(message, Message.RecipientType.CC, ['cc@domain.com'])
+		when:
+			mailSpy.cc = []
+			mailSpy.createRecipients(message)
+		then:
+			0 * mailSpy.setRecipients(message, Message.RecipientType.CC, _ as List)
+	}
+	
+	def "Should be able to set BCC recipients if they exists"() {
+		given:
+			Mail mailSpy = Spy()
+			MimeMessage message = Mock()
+		when:
+			mailSpy.bcc = ['bcc@domain.com']
+			mailSpy.createRecipients(message)
+		then:
+			1 * mailSpy.setRecipients(message, Message.RecipientType.BCC, ['bcc@domain.com'])
+		when:
+			mailSpy.bcc = []
+			mailSpy.createRecipients(message)
+		then:
+			0 * mailSpy.setRecipients(message, Message.RecipientType.BCC, _ as List)
+	}
+	
 }
