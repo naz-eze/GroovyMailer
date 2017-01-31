@@ -3,7 +3,7 @@
 
 This provides a fluent builder-style mailing interface using the JavaMail Library.
 
-Currently no "real" documentation, but the quick example below shows how to use it:
+Currently no "real" documentation, but the example below shows how to use it:
 
 		Mail.configure {
 			it.SMTP_HOST = 'smtp.yourdomain.com'
@@ -30,12 +30,16 @@ Currently no "real" documentation, but the quick example below shows how to use 
 				content "I'm very happy today!"
 				type 'text/plain'
 			}
+			attachment {
+					name '/Users/naz/someFile.pdf'
+					name 'randomFile.txt'
+			}
 		}
 		mail.send()
 
 
 
-GroovyMailer is free to use and licensed under The 3-Clause BSD licence.
+GroovyMailer is free to use and licensed under the 3-Clause BSD licence.
 
 > Copyright &copy; 2017 Naz Ezeonyebuchi
 
