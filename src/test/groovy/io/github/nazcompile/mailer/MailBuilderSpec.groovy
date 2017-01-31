@@ -123,6 +123,9 @@ class MailBuilderSpec extends Specification {
 					content "I'm very happy today!"
 					type 'text/plain'
 				}
+				attachment {
+					name 'randomfile.pdf'
+				}
 			}
 		then:
 			mail.getFrom() == 'noreply@yourdomain.com'
@@ -132,6 +135,7 @@ class MailBuilderSpec extends Specification {
 			mail.getSubject() == "I'm happy"
 			mail.getMessageContent() == "I'm very happy today!"
 			mail.getMessageType() == 'text/plain'
+			mail.getAttachments() == ['randomfile.pdf']
 	}
 
 }
