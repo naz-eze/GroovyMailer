@@ -3,6 +3,10 @@
 
 This provides a fluent builder-style mailing interface using the JavaMail Library.
 
+The project is [Gradle](https://gradle.org/getting-started/using-a-build) bootstrapped, so to build simply change directory to the project root directory and..
+*	for *nix OS run the command - ./gradlew clean build
+* 	for Windows OS run the command - gradlew.bat clean build
+   
 Currently no "real" documentation, but the example below shows how to use it:
 
 		Mail.configure {
@@ -15,15 +19,15 @@ Currently no "real" documentation, but the example below shows how to use it:
 			to {
 				email 'recipientOne@yourdomain.com'
 				email 'recipientTwo@yourdoimain.com'
-				...
+				//...
 			}
 			cc {
 				email 'cc@yourdomain.com'
-				...
+				//...
 			}
 			bcc { 
 				email 'bcc@yourdomain.com' 
-				...
+				//...
 			}
 			subject "I'm happy"
 			message {
