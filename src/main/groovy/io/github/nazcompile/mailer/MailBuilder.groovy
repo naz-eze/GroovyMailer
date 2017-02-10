@@ -61,11 +61,11 @@ class MailBuilder {
 		attachmentMode = false
 	}
 	
-	def name(String fileName) {
+	def path(String filePath) {
 		if (attachmentMode) {
-			mail.attachments << fileName
+			mail.attachments << filePath
 		} else {
-			throw new UnsupportedOperationException("name() only allowed in attachment context.")
+			throw new UnsupportedOperationException("path() only allowed in attachment context.")
 		}
 	}
 	

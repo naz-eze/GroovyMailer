@@ -44,17 +44,17 @@ class MailBuilderSpec extends Specification {
 		when:
 			Mail mail = new MailBuilder().build {
 				attachment {
-					name 'somefile.pdf'
-					name 'random.txt'
+					path 'somefile.pdf'
+					path 'random.txt'
 				}
 			}
 		then:
 			mail.getAttachments() == ['somefile.pdf', 'random.txt']
 	}
 	
-	def "Should through UnsupportedOperationException if name() is used incorrectly"() {
+	def "Should through UnsupportedOperationException if path() is used incorrectly"() {
 		when:
-			new MailBuilder().build { name 'wrongplace.doc' }
+			new MailBuilder().build { path 'wrongplace.doc' }
 		then:
 			thrown(UnsupportedOperationException)
 	}
@@ -124,7 +124,7 @@ class MailBuilderSpec extends Specification {
 					type 'text/plain'
 				}
 				attachment {
-					name 'randomfile.pdf'
+					path 'randomfile.pdf'
 				}
 			}
 		then:
