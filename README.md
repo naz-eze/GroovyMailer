@@ -35,8 +35,8 @@ Currently no "real" documentation, but the example below shows how to use it:
 				type 'text/plain'
 			}
 			attachment {
-					name '/Users/naz/someFile.pdf'
-					name 'randomFile.txt'
+					path '/Users/naz/someFile.pdf'
+					path 'randomFile.txt'
 			}
 		}
 		mail.send()
